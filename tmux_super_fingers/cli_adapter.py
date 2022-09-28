@@ -73,18 +73,18 @@ class RealCliAdapter(CliAdapter):  # pragma: no cover
             ][0]
 
     def select_tmux_window(self, id: str) -> None:
-        os.system(f'tmux select-window -t {id}')
+        os.system(f'/opt/homebrew/bin/tmux select-window -t {id}')
 
     def tmux_send_keys(self, id: str, keys: str) -> None:
-        os.system(f'tmux send-keys -t {id} {keys}')
+        os.system(f'/opt/homebrew/bin/tmux send-keys -t {id} {keys}')
 
     def new_tmux_window(self, name: str, command: str) -> None:
-        os.system(f'tmux new-window -n {name} {command}')
+        os.system(f'/opt/homebrew/bin/tmux new-window -n {name} {command}')
 
     def capture_tmux_viewport(self, pane_id: str, start: int, end: int, unwrapped: bool = False) -> str:
         wrap_flag = '-J' if unwrapped else ''
         return strip(
-            shell(f'tmux capture-pane -p -S {start} -E {end} {wrap_flag} -t {pane_id}')
+            shell(f'/opt/homebrew/bin/tmux capture-pane -p -S {start} -E {end} {wrap_flag} -t {pane_id}')
         )
 
     def get_tmux_pane_cwd(self, pane_tty: str) -> str:
@@ -111,7 +111,7 @@ class RealCliAdapter(CliAdapter):  # pragma: no cover
 
     def _get_panes_props(self, tmux_target: str) -> List[PaneProps]:
         props: List[str] = shell(
-            'tmux list-panes ' + tmux_target + ' -F #{pane_id},#{pane_tty},#{pane_left},'
+            '/opt/homebrew/bin/tmux list-panes ' + tmux_target + ' -F #{pane_id},#{pane_tty},#{pane_left},'
             '#{pane_right},#{pane_top},#{pane_bottom},#{scroll_position}'
         ).split('\n')
 

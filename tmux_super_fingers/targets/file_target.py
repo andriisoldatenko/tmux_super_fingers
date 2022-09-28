@@ -41,6 +41,9 @@ class FileTarget(Target):
 
     @property
     def default_primary_action(self) -> Type[Action]:
+        import sys
+        print(os.environ['EDITOR'], file=sys.stderr)
+        print(f"{self.content_type } {ContentType.TEXT}", file=sys.stderr)
         if self.content_type == ContentType.TEXT and re.search('^n?vim', os.environ['EDITOR']):
             return SendToVimInTmuxPaneAction
         else:
